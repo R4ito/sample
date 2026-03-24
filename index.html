@@ -1,0 +1,176 @@
+<html>
+
+<head>
+    <title>ショッピングセンター</title>
+</head>
+
+<BODY BGCOLOR="#ffffff" text="#660000" BACKGROUND="./back.gif">
+    <DIV ALIGN="center">
+        <HR><B>ショッピングセンター</B>
+        <HR>
+    </DIV>
+    <a href="index2.html">お問い合わせフォーム</a>
+
+    <table ALIGN="center" CELLSPACING="100">
+        <TR>
+            <TD>
+                <div class="item">
+                    <h3>Apple純正イヤホン</h3>
+                    <a href="S/Sapple.html" BORDER="1">
+                        <img src="img/apple.jpg" width="240" height="180" BORDER="0" ALT="apple純正イヤホンが発売">
+                    </a>
+                    <p>価格: ¥3000</p>
+                    <button onclick="addToCart('item1')">カートに追加</button>
+                </div>
+            </TD>
+            <TD>
+                <div class="item">
+                    <h3>AirPods</h3>
+                    <a href="S/SappleW.html" BORDER="1">
+                        <img src="img/appleW.jpg" width="240" height="180" BORDER="0">
+                    </a>
+                    <p>価格: ¥20000</p>
+                    <button onclick="addToCart('item2')">カートに追加</button>
+                </div>
+            </TD>
+            <TD>
+                <div class="item">
+                    <h3>RAZER</h3>
+                    <a href="S/Srazer.html" BORDER="1">
+                        <img src="img/razer.jpg" width="240" height="180" BORDER="0">
+                    </a>
+                    <p>価格: ¥7000</p>
+                    <button onclick="addToCart('item3')">カートに追加</button>
+                </div>
+            </TD>
+        </TR>
+        <TR>
+            <TD>
+                <div class="item">
+                    <h3>SHURE</h3>
+                    <a href="S/Sshure.html" BORDER="1">
+                        <img src="img/shure.jpg" width="240" height="180" BORDER="0">
+                    </a>
+                    <p>価格: ¥10000</p>
+                    <button onclick="addToCart('item4')">カートに追加</button>
+                </div>
+            </TD>
+            <TD>
+                <div class="item">
+                    <h3>Hyper X</h3>
+                    <a href="S/SHX.html" BORDER="1">
+                        <img src="img/HX.jpg" width="240" height="180" BORDER="0">
+                    </a>
+                    <p>価格: ¥7000</p>
+                    <button onclick="addToCart('item5')">カートに追加</button>
+                </div>
+            </TD>
+            <TD>
+                <div id="cart">
+                    <h3>カート</h3>
+                    <ul id="cart-items">
+                    </ul>
+                    <p id="total-price">合計金額: ¥0</p>
+                    <button onclick="goToCartPage()">カートページへ移動</button>
+                </div>
+            </TD>
+        </TR>
+    </table>
+
+    <script>
+        var cartItems = [];
+        function addToCart(itemID) {
+            var item = {
+                id: itemID,
+                name: getItemName(itemID),
+                price: getItemPrice(itemID),
+                quantity: 1,
+            };
+
+            var existingItem = cartItems.find((item) => item.id === itemID);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cartItems.push(item);
+            }
+
+            displayCart();
+        }
+
+        function displayCart() {
+            var cartList = document.getElementById("cart-items");
+            var totalPriceParagraph = document.getElementById("total-price");
+
+            cartList.innerHTML = "";
+            var totalPrice = 0;
+
+            cartItems.forEach(function (item) {
+                var cartItem = document.createElement("li");
+                cartItem.textContent =
+                    item.name + " - ¥" + item.price + " x " + item.quantity;
+
+                var deleteButton = document.createElement("button");
+                deleteButton.textContent = "削除";
+                deleteButton.onclick = function () {
+                    removeFromCart(item.id);
+                };
+
+                cartItem.appendChild(deleteButton);
+                cartList.appendChild(cartItem);
+                totalPrice += item.price * item.quantity;
+            });
+
+            totalPriceParagraph.textContent = "合計金額: ¥" + totalPrice;
+        }
+
+        function removeFromCart(itemID) {
+            cartItems = cartItems.filter((item) => item.id !== itemID);
+            displayCart();
+        }
+
+        function goToCartPage() {
+            localStorage.setItem("cartItems", JSON.stringify(cartItems));
+            window.location.href = "cart.html";
+        }
+
+
+        function getItemName(itemID) {
+            if (itemID === "item1") {
+                return "Apple純正イヤホン";
+            }
+            else if (itemID === "item2") {
+                return "AirPods";
+            }
+            else if (itemID === "item3") {
+                return "RAZER";
+            }
+            else if (itemID === "item4") {
+                return "shuer";
+            }
+            else if (itemID === "item5") {
+                return "HX";
+            }
+        }
+
+        function getItemPrice(itemID) {
+            if (itemID === "item1") {
+                return 3000;
+            }
+            else if (itemID === "item2") {
+                return 20000;
+            }
+            else if (itemID === "item3") {
+                return 7000;
+            }
+            else if (itemID === "item4") {
+                return 10000;
+            }
+            else if (itemID === "item5") {
+                return 7000;
+            }
+        }
+    </script>
+</body>
+
+</html>
