@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>カートページ</title>
+</head>
+
+<BODY BGCOLOR="#ffffff" text="#660000" BACKGROUND="./back.gif">
+    <DIV ALIGN="center">
+        <HR><B>カートページ</B>
+        <HR>
+    </DIV>
+    <div id="cart-content">
+    </div>
+    <p id="total-price">合計金額: ¥0</p>
+    <button onclick="purchaseItems()">購入する</button>
+    <button onclick="goToShoppingCenter()">ショッピングセンターに戻る</button>
+    
+
+    <script>
+        var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+        function displayCart() {
+            var cartContent = document.getElementById("cart-content");
+            var totalPriceParagraph = document.getElementById("total-price");
+
+            cartContent.innerHTML = "";
+            var totalPrice = 0;
+
+            cartItems.forEach(function (item) {
+                var cartItem = document.createElement("div");
+                cartItem.textContent =
+                    item.name + " - ¥" + item.price + " x " + item.quantity;
+
+                cartContent.appendChild(cartItem);
+                totalPrice += item.price * item.quantity;
+            });
+
+            totalPriceParagraph.textContent = "合計金額: ¥" + totalPrice;
+        }
+
+        function goToShoppingCenter() {
+            window.location.href = "index.html";
+        }
+
+        function purchaseItems() {
+            alert("購入が完了しました！");
+            cartItems = [];
+            localStorage.setItem("cartItems", JSON.stringify(cartItems));
+            displayCart(); 
+        }
+
+        displayCart();
+    </script>
+</body>
+
+</html>
