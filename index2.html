@@ -1,0 +1,137 @@
+<html>
+<head>
+<title>問い合わせフォーム</title>
+
+<script type="text/javascript"> 
+<!-- 
+
+function check(){
+
+	var flag = 0;
+	if(document.form1.field1.value == ""){ 
+
+		flag = 1;
+
+	}
+	else if(document.form1.field2.value == ""){ 
+
+		flag = 1;
+
+	}
+	else if(!document.form1.field3.value.match(/.+@.+\..+/)){
+
+        flag = 1;
+
+    }
+    else if(document.form1.field4.value == ""){ 
+
+        flag = 1;
+
+    }
+    else if(document.form1.field5.value == ""){ 
+
+        flag = 1;
+
+    }
+	if(flag){
+
+		window.alert('必須項目に未入力があるか、メールアドレスが間違いです。');
+		return false; 
+    }
+
+    else{
+
+    return true; // 送信を実行
+
+    }
+}
+    
+// -->
+</script>
+
+</head>
+
+<BODY BGCOLOR="#ffffff" text="#660000" BACKGROUND="./back.gif">
+    <DIV ALIGN="center"><HR><B>お問い合わせフォーム</B><br>(入力ページ)<HR></DIV>
+
+<form method="POST" action="test.html" name="form1" onSubmit="return check()">
+
+<p>氏名<br><input type="text" name="field1" size="30" id="1"> （必須）</p>
+
+<p>生年月日<br><input type="text" name="field2" size="30" id="2"> （必須）</p>
+
+<p>メールアドレス<br><input type="text" name="field3" size="30" NAME="email" id="3"> （必須）</p>
+    
+<p>TEL<br><input type="text" id="entered-characters1" oninput="limitTextLength1();" name="field4" size="30">（必須）
+    <p>半角数字：<span id="remaining-characters1">12</span></p></p>
+    <script>
+        const limitTextLength1 = () => {
+            let maxLength = 12; 
+            let enteredCharacters = document.getElementById('entered-characters1');
+            let remainingCharacters = document.getElementById('remaining-characters1');
+      
+            if (enteredCharacters.value.length > maxLength) {
+              enteredCharacters.value = enteredCharacters.value.substr(0, maxLength);
+              remainingCharacters.classList.add('max');
+            } else {
+              remainingCharacters.classList.remove('max');
+            }
+      
+         remainingCharacters.textContent = maxLength - enteredCharacters.value.length;
+        };
+    </script>
+
+<p>お問い合わせ内容<br><textarea id="entered-characters" oninput="limitTextLength();" name="field5" cols="32" rows="15"></textarea> （必須）
+    <p>残りの文字数：<span id="remaining-characters">5000</span></p></p>
+    <script>
+        const limitTextLength = () => {
+            let maxLength = 5000; 
+            let enteredCharacters = document.getElementById('entered-characters');
+            let remainingCharacters = document.getElementById('remaining-characters');
+      
+            if (enteredCharacters.value.length > maxLength) {
+              enteredCharacters.value = enteredCharacters.value.substr(0, maxLength);
+              remainingCharacters.classList.add('max');
+            } else {
+              remainingCharacters.classList.remove('max');
+            }
+      
+         remainingCharacters.textContent = maxLength - enteredCharacters.value.length;
+        };
+    </script>
+    <script>
+        function saveToSessionStorage() {
+          const textBoxValue = document.getElementById('1').value;
+          sessionStorage.setItem('textValue', textBoxValue);
+          const textBoxValue1 = document.getElementById('2').value;
+          sessionStorage.setItem('textValue1', textBoxValue1);
+          const textBoxValue2 = document.getElementById('3').value;
+          sessionStorage.setItem('textValue2', textBoxValue2);
+          const textBoxValue3 = document.getElementById('entered-characters1').value;
+          sessionStorage.setItem('textValue3', textBoxValue3);
+          const textBoxValue4 = document.getElementById('entered-characters').value;
+          sessionStorage.setItem('textValue4', textBoxValue4);
+
+        }
+    </script>
+    <button onclick="saveToSessionStorage()">保存 確認ページへ</button>
+
+    <script>
+        window.onload = function() {
+        var textBox = document.getElementById("1");
+        textBox.value = sessionStorage.getItem("textValue") || "";
+        var textBox = document.getElementById("2");
+        textBox.value = sessionStorage.getItem("textValue1") || "";
+        var textBox = document.getElementById("3");
+        textBox.value = sessionStorage.getItem("textValue2") || "";
+        var textBox = document.getElementById("entered-characters1");
+        textBox.value = sessionStorage.getItem("textValue3") || "";
+        var textBox = document.getElementById("entered-characters");
+        textBox.value = sessionStorage.getItem("textValue4") || "";
+        
+  };
+    </script>
+</form>
+<a href="index.html">ショッピングセンター</a>
+</body>
+</html>
